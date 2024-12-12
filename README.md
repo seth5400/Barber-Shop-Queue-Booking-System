@@ -21,3 +21,21 @@ A web-based system for managing barber shop appointments and queues efficiently.
 1. Clone the repository:
    ```bash
    git clone <repository_url>
+
+2. Navigate to the project directory
+   ```bash
+   cd Project_HairK_version4
+
+3. Set up the database
+- Configure your database details in src/main/resources/application.properties
+- Run the necessary SQL migrations if provided.
+
+4. Build and run the project:
+```bash
+mvn spring-boot:run
+
+5. Access the application
+- Open your browser and navigate to http://localhost:8080
+
+
+
