@@ -1,0 +1,373 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CUT JAI</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap');
+
+        /* Global Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #fff;
+            color: #333;
+            scroll-behavior: smooth;
+            height: 100%;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Left Side */
+        .left {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        .title-container {
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            z-index: 2;
+            margin-left: 0px;
+        }
+
+        .title-container h1 {
+            font-size: 50px;
+            color: #fff;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            text-transform: uppercase;
+            line-height: 0.8;
+        }
+
+        .left p {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: #fff;
+            font-size: 14px;
+            font-family: 'Playfair Display', serif;
+            z-index: 2;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .slider-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slider-container img.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .slider-nav {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .slider-nav .dot {
+            width: 15px;
+            height: 15px;
+            margin: 10px 0;
+            background-color: #000;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .slider-nav .dot.active {
+            background-color: #e8491d;
+        }
+
+        /* Right Side */
+        .right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+            background-color: #fff;
+        }
+
+        .right-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+        }
+
+        .right img {
+            max-height: 400px;
+            max-width: 300px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .image-title {
+            font-size: 50px;
+            font-weight: 700;
+            color: #e8491d;
+            margin-bottom: 10px;
+            font-family: 'Pork belly', Pork belly;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .right p {
+            font-size: 16px;
+            font-weight: 300;
+            color: #777;
+            margin: 20px 0;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+        }
+
+        /* Navigation */
+        nav {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #333;
+            text-transform: uppercase;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e8491d;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background-color: #e8491d;
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #f8f8f8;
+            color: #333;
+            text-align: center;
+            padding: 40px 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        footer .footer-links {
+            margin: 20px 0;
+        }
+
+        footer .footer-links a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        footer .footer-links a:hover {
+            color: #e8491d;
+        }
+
+        footer p {
+            font-size: 14px;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        footer .social-icons a {
+            margin: 0 10px;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        footer .social-icons a:hover {
+            color: #e8491d;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .left, .right {
+                width: 100%;
+                height: auto;
+            }
+
+            .title-container h1 {
+                font-size: 30px;
+            }
+
+            .image-title {
+                font-size: 35px;
+            }
+
+            .right img {
+                max-height: 300px;
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title-container h1 {
+                font-size: 25px;
+            }
+
+            .image-title {
+                font-size: 30px;
+            }
+
+            .right img {
+                max-height: 200px;
+                max-width: 150px;
+            }
+
+            nav ul li {
+                margin-left: 10px;
+            }
+
+            nav ul li a {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="left">
+            <div class="title-container">
+                <h1>CUSTOM</h1>
+                <h1>YOUR</h1>
+                <h1>STYLE</h1>
+            </div>
+            <div class="slider-container">
+                <img src="https://i.dailymail.co.uk/i/newpix/2018/07/24/11/4E84EFC200000578-0-image-a-17_1532429333921.jpg" class="active">
+                <img src="https://scontent.fkkc2-1.fna.fbcdn.net/v/t31.18172-8/28700843_1674391309274986_7221634722951939422_o.jpg?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_ohc=k5oY2x6zigMQ7kNvgFBxGvP&_nc_ht=scontent.fkkc2-1.fna&oh=00_AYChA6G5LtzUWbjZDzsRsjALbtnwoMFuRGob46wgvwCUhw&oe=6714E90B">
+                <img src="https://scontent.fkkc2-1.fna.fbcdn.net/v/t31.18172-8/28514800_1674390295941754_490361015356572762_o.jpg?_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_ohc=ivxSxmq-Tc8Q7kNvgGZvO-Q&_nc_ht=scontent.fkkc2-1.fna&_nc_gid=AWbjmjsej1RPd7yhJ8iOpIZ&oh=00_AYDcrlKDEBBvVf36dRuS5MCC9XX7pXQDbE45a8Imw-HvbA&oe=6714F827">
+                <div class="slider-nav">
+                    <div class="dot active" onclick="showSlide(0)"></div>
+                    <div class="dot" onclick="showSlide(1)"></div>
+                    <div class="dot" onclick="showSlide(2)"></div>
+                </div>
+            </div>
+            <p>CUT JAI "Neighborhood" Barbershop</p>
+        </div>
+
+        <div class="right">
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                </ul>
+            </nav>
+            <div class="right-content">
+                <div class="image-title">CUT JAI</div>
+                <img src="https://i.dailymail.co.uk/i/newpix/2018/07/24/11/4E84EFC200000578-0-image-a-17_1532429333921.jpg" alt="Example Image">
+            </div>
+            <p>I CUT MY HAIR BECAUSE YOU DON'T CARE MY HEART</p>
+        </div>
+    </div>
+    
+    <script>
+        const slides = document.querySelectorAll('.slider-container img');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = index;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            resetInterval();
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function nextSlide() {
+            let nextIndex = (currentSlide + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+
+        slideInterval = setInterval(nextSlide, 5000);
+    </script>
+</body>
+</html>

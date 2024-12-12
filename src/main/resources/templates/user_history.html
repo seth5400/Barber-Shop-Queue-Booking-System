@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Appointment History</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+        body {
+        	background-image: url('https://wallpapercave.com/wp/wp1946307.jpg'); /* เพิ่มภาพพื้นหลังเดียวกับหน้า user_home */
+            background-size: cover; /* ทำให้ภาพขยายเต็มหน้าจอ */
+            background-position: center; /* จัดตำแหน่งภาพให้อยู่ตรงกลาง */
+            background-repeat: no-repeat; /* ป้องกันไม่ให้ภาพซ้ำ */
+            height: 100vh; /* ทำให้เต็มหน้าจอ */
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100%;
+
+        }
+
+        /* Container Styles */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            color: #e8491d; /* ใช้สีเดียวกับหน้า user_home */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        /* Table Styles */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #333; /* เปลี่ยนสีหัวข้อ table ให้เหมือนหน้า user_home */
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            width: 250px;
+            padding: 15px 20px; /* ขนาดปุ่มเท่ากับ user_home */
+            background-color: #333; /* เปลี่ยนสีปุ่มเป็นสีเดียวกับหน้า index */
+            color: #fff;
+            text-transform: uppercase;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #e8491d; /* เปลี่ยนเป็นสีส้มเมื่อ hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Appointment History</h1>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Barber</th>
+                        <th>Service</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Using Thymeleaf to loop through and display user appointment history -->
+                    <tr th:each="appointment : ${historyAppointments}">
+                        <td th:text="${appointment.date}">Date</td>
+                        <td th:text="${appointment.time}">Time</td>
+                        <td th:text="${appointment.barber.name}">Barber</td>
+                        <td th:text="${appointment.barberService.serviceName}">Service</td>
+                        <td th:text="${appointment.barberService.servicePrice}">Price</td>
+                        <td th:text="${appointment.status}">Status</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a href="/home" class="btn">Back to Home</a>
+    </div>
+</body>
+</html>

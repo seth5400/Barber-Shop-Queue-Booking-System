@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manage Users</title>
+<style>
+/* Google Fonts */
+@import
+	url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap')
+	;
+
+body {
+	background-image: url('https://wallpapercave.com/wp/wp1946307.jpg');
+	/* Background image */
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+	color: #333;
+	min-height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+/* Main Content */
+.container {
+	width: 100%;
+	max-width: 1000px;
+	padding: 40px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	border-radius: 10px;
+	margin-top: 60px;
+	margin-bottom: 60px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Navbar Styles */
+nav {
+	position: absolute;
+	top: 20px;
+	left: 30px;
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+
+nav ul li a {
+	padding: 10px 20px;
+	background-color: #333;
+	color: #fff;
+	text-decoration: none;
+	text-transform: uppercase;
+	border-radius: 8px;
+	font-size: 14px;
+	transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+	background-color: #e8491d;
+}
+
+/* Table Styles */
+.table-container {
+	width: 100%;
+	overflow-x: auto;
+	margin-top: 20px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table th, table td {
+	padding: 15px;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+}
+
+table th {
+	background-color: #333;
+	color: #fff;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+table tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+table tr:hover {
+	background-color: #f5f5f5;
+}
+
+/* Button Styles */
+.btn {
+	padding: 8px 15px;
+	background-color: #333;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background-color 0.3s;
+}
+
+.btn:hover {
+	background-color: #e8491d;
+}
+
+select {
+	padding: 8px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	font-size: 14px;
+	margin-right: 10px;
+}
+
+form {
+	display: inline;
+}
+</style>
+</head>
+<body>
+
+	<!--  
+    <nav>
+        <ul>
+            <li><a href="/admin/home">Back</a></li>
+        </ul>
+    </nav>-->
+
+	<div class="container">
+		<h2>Manage Users</h2>
+		<!-- Heading added -->
+
+		<!-- Manage Users Table -->
+		<div class="table-container">
+			<table>
+				<tr>
+					<th>User ID</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Role</th>
+					<th>Actions</th>
+				</tr>
+				<!-- Loop through users -->
+				<tr th:each="user : ${users}">
+					<td th:text="${user.id}"></td>
+					<td th:text="${user.name}"></td>
+					<td th:text="${user.email}"></td>
+					<td th:text="${user.role}"></td>
+					<!-- Show user role -->
+					<td>
+						<form th:action="@{/delete-user}" method="post">
+							<input type="hidden" name="userId" th:value="${user.id}">
+							<input type="hidden" name="role" th:value="${user.role}">
+							<button type="submit" class="btn">Delete</button>
+						</form>
+
+						<form th:action="@{/update-role}" method="post">
+							<input type="hidden" name="userId" th:value="${user.id}" /> <select
+								name="role">
+								<option value="user" th:selected="${user.role == 'user'}">User</option>
+								<option value="barber" th:selected="${user.role == 'barber'}">Barber</option>
+								<option value="admin" th:selected="${user.role == 'admin'}">Admin</option>
+							</select>
+							<button type="submit" class="btn">Update</button>
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</body>
+</html>

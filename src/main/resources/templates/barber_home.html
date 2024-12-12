@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barber Home</title>
+<style>
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+body {
+    background-image: url('https://wallpapercave.com/wp/wp1946307.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Main Container */
+.main-container {
+    width: 100%;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 10px;
+    margin-top: 60px;
+}
+
+/* Sidebar */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #e8491d;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 50px;
+    font-weight: 700;
+}
+
+.user-info h2 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+    text-align: center;
+}
+
+.user-info p {
+    font-size: 14px;
+    color: #777;
+    margin: 5px 0;
+}
+
+.sidebar a {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin: 10px 0;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.btn-a {
+	width: 200px
+}
+.sidebar a:hover {
+    background-color: #e8491d;
+}
+
+/* Content Area */
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.content h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.content .section {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.section h3 {
+    font-size: 22px;
+    color: #e8491d;
+    margin-bottom: 15px;
+}
+
+.section p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.card h4 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.card p {
+    font-size: 24px;
+    color: #e8491d;
+    margin: 0;
+    font-weight: 700;
+}
+
+/* Button Styles */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin: 15px 0;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.btn-a{
+	width:700px;
+}
+
+button{
+	border:none;
+	cursor: pointer;
+}
+
+
+.btn:hover {
+    background-color: #e8491d;
+}
+
+</style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="profile-picture">B</div>
+            <div class="user-info">
+                <h2 th:text="${barber.name}">Barber Name</h2>
+                <p th:text="${barber.email}">barber@example.com</p>
+            </div>
+            <a href="/barber/schedule">Schedule</a>
+            <a href="/logout">Logout</a>
+        </div>
+
+        <div class="content">
+            <h2>Barber Dashboard</h2>
+
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h4>Total Earnings</h4>
+                    <p id="total-earnings">฿0.00</p>
+                </div>
+                <div class="card" id="order-card" onclick="toggleOrderData()">
+                    <h4 id="order-title">Total Orders</h4>
+                    <p id="order-count">0</p>
+                </div>
+                <div class="card">
+                    <h4>Ratings</h4>
+                    <p>4.8/5</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Today's Appointments</h3>
+                <p>No appointments scheduled for today.</p>
+                <a href="/barber/appointments" class="btn btn-a">View Appointments</a>
+            </div>
+
+            <div class="section">
+                <h3>Update availability</h3>
+                <p>Update your availability</p>
+                <form th:action="@{/toggle-availability}" method="post">
+                    <button type="submit" class="btn"
+                        th:text="${barber.isAvailable ? 'Available' : 'Not Available'}"></button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h3>History of Appointments</h3>
+                <p>View the history of all appointments you have handled.</p>
+                <a href="/barber/history" class="btn btn-a">View History</a>
+            </div>
+
+        </div>
+    </div>
+
+<script>
+    let currentView = "total";
+
+    function toggleOrderData() {
+        let url;
+        let title;
+
+        if (currentView === "total") {
+            url = "/barber/pending-orders";
+            title = "Pending Orders";
+            currentView = "pending";
+        } else if (currentView === "pending") {
+            url = "/barber/accepted-orders";
+            title = "Accepted Orders";
+            currentView = "accepted";
+        } else if (currentView === "accepted") {
+            url = "/barber/cancelled-orders";
+            title = "Cancelled Orders";
+            currentView = "cancelled";
+        } else {
+            url = "/barber/total-orders";
+            title = "Total Orders";
+            currentView = "total";
+        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("order-title").textContent = title;
+                document.getElementById("order-count").textContent = data.count || data;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    window.onload = function() {
+        fetch("/barber/total-orders")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("order-count").textContent = data;
+            })
+            .catch(error => console.error('Error:', error));
+
+        fetch("/barber/total-earnings")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("total-earnings").textContent = `$${data.toFixed(2)}`;
+            })
+            .catch(error => console.error('Error:', error));
+    };
+</script>
+
+</body>
+</html>

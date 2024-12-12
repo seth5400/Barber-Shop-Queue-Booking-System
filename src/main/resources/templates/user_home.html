@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Home</title>
+<style>
+/* Google Fonts */
+@import
+	url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap')
+	;
+
+
+body {
+	background-image: url('https://wallpapercave.com/wp/wp1946307.jpg');
+	/* เพิ่มภาพพื้นหลัง */
+	background-size: cover; /* ทำให้ภาพขยายเต็มหน้าจอ */
+	background-position: center; /* จัดตำแหน่งภาพให้อยู่ตรงกลาง */
+	background-repeat: no-repeat; /* ป้องกันไม่ให้ภาพซ้ำ */
+	height: 100vh; /* ทำให้เต็มหน้าจอ */
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+	color: #333;
+	min-height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+}
+
+/* Main Content */
+.main-container {
+	width: 100%;
+	max-width: 1000px;
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	gap: 20px;
+	padding: 40px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	border-radius: 10px;
+}
+
+/* Sidebar */
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	background-color: #f9f9f9;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	text-align: center; /* จัดให้อยู่กึ่งกลาง */
+}
+
+.profile-picture {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	background-color: #e8491d;
+	margin-bottom: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 50px;
+	font-weight: 700;
+}
+
+.user-info h2 {
+	font-size: 24px;
+	color: #333;
+	margin: 0;
+	text-align: center; /* จัดชื่อให้อยู่ตรงกลาง */
+}
+
+.user-info p {
+	font-size: 14px;
+	color: #777;
+	margin: 5px 0;
+}
+
+/* ปรับสีพื้นฐานของปุ่มให้เหมือนหน้า index และเปลี่ยนเป็นสีส้มเมื่อ hover */
+.sidebar a, .btn {
+	display: block;
+	padding: 15px 20px; /* ค่าที่ไม่เปลี่ยนขนาดของปุ่ม */
+	margin: 10px 0;
+	text-align: center;
+	background-color: #333; /* เปลี่ยนสีปุ่มเป็นสีเดียวกับหน้า index */
+	color: #fff;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 16px;
+	border-radius: 5px;
+	transition: background-color 0.3s;
+}
+
+.btn-a {
+	width: 200px
+}
+
+.sidebar a:hover, .btn:hover {
+	background-color: #e8491d; /* เปลี่ยนเป็นสีส้มเมื่อ hover */
+}
+
+/* Content Area */
+.content {
+	display: flex;
+	flex-direction: column;
+}
+
+.content h2 {
+	font-size: 28px;
+	color: #333;
+	margin-bottom: 20px;
+	text-transform: uppercase;
+}
+
+.content .section {
+	background-color: #f9f9f9;
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin-bottom: 20px;
+}
+
+.section h3 {
+	font-size: 22px;
+	color: #e8491d;
+	margin-bottom: 15px;
+}
+
+.section p {
+	font-size: 14px;
+	color: #555;
+}
+</style>
+</head>
+<body>
+	<div class="main-container">
+		<!-- Sidebar -->
+		<div class="sidebar">
+			<div class="profile-picture">U</div>
+			<div class="user-info">
+				<h2 th:text="${user.name}">Akkcs</h2>
+				<p th:text="${user.email}">email@example.com</p>
+			</div>
+			<a class="btn-a" href="/user/profile">Profile</a> <a class="btn-a"
+				href="/user/appointments">My Appointments</a> <a class="btn-a"
+				href="/logout">Logout</a>
+			<!-- เพิ่มปุ่ม Logout ที่นี่ -->
+		</div>
+
+		<!-- Content Area -->
+		<div class="content">
+			<h2>Dashboard</h2>
+
+			<!-- Section: Upcoming Appointments -->
+			<!-- Section: Upcoming Appointments -->
+			<div class="section">
+				<h3>Upcoming Appointments</h3>
+				<p>No upcoming appointments scheduled.</p>
+
+				<!-- ตรวจสอบสถานะการจอง -->
+				<div th:if="${isBookingEnabled}">
+					<a href="/appointment/book" class="btn">Book Appointment</a>
+				</div>
+				<div th:unless="${isBookingEnabled}">
+					<p style="color : #e8491d;">Booking has been disabled by the administrator</p>
+				</div>
+			</div>
+
+			<!-- Section: Appointment History -->
+			<div class="section">
+				<h3>Appointment History</h3>
+				<p>View your past appointments and reviews.</p>
+				<a href="/user/history" class="btn">View History</a>
+			</div>
+
+			<!-- Section: Account Information
+			<div class="section">
+				<h3>Account Information</h3>
+				<p>Manage your personal information and settings.</p>
+				<a href="/user/edit" class="btn">Update Info</a>
+			</div> -->
+		</div>
+	</div>
+</body>
+</html>

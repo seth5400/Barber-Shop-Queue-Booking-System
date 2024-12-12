@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Settings</title>
+<style>
+/* Google Fonts */
+@import
+	url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap')
+	;
+
+body {
+	background-image: url('https://wallpapercave.com/wp/wp1946307.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+	color: #333;
+	min-height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+/* Main Container */
+.container {
+	background-color: #fff;
+	padding: 40px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	max-width: 500px;
+	width: 100%;
+}
+
+h2 {
+	text-align: center;
+	font-size: 28px;
+	margin-bottom: 20px;
+	color: #333;
+	text-transform: uppercase;
+}
+
+.setting-section {
+	margin-bottom: 30px;
+}
+
+.setting-section h3 {
+	font-size: 22px;
+	margin-bottom: 10px;
+	color: #e8491d;
+}
+
+.setting-section label {
+	font-size: 16px;
+	color: #555;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.toggle-switch input[type="checkbox"] {
+	display: none;
+}
+
+.toggle-slider {
+	position: relative;
+	width: 60px;
+	height: 30px;
+	background-color: #ccc;
+	border-radius: 15px;
+	cursor: pointer;
+	
+	transition: background-color 0.3s ease;
+}
+
+.toggle-slider:before {
+	content: "";
+	position: absolute;
+	width: 26px;
+	height: 26px;
+	background-color: white;
+	border-radius: 50%;
+	top: 2px;
+	left: 2px;
+	transition: 0.3s ease;
+}
+
+input:checked+.toggle-slider {
+	background-color: #2196F3;
+}
+
+input:checked+.toggle-slider:before {
+	transform: translateX(30px);
+}
+
+/* Button Styles */
+.btn-container {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 30px;
+}
+
+.btn {
+	width: 240px;
+	height: 40px;
+	border-radius: 5px;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 16px;
+	cursor: pointer;
+
+}
+
+.btn-save {
+	background-color: #e8491d;
+	color: white;
+	border: none;
+	transition: background-color 0.3s ease;
+}
+
+.btn-save:hover {
+	background-color: #d73814;
+}
+
+.btn-back {
+	background-color: #555;
+	color: white;
+	border: none;
+	transition: background-color 0.3s ease;
+}
+
+a.btn-back {
+	text-decoration: none;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+.btn-back:hover {
+	background-color: #333;
+}
+
+/* Success message style */
+.alert {
+	margin-bottom: 20px;
+	width:100%;
+	height:50px;
+	border-radius: 5px;
+	background-color: #e8491d;
+	color: white;
+	text-align: center;
+	display:flex;
+	justify-content: center;
+    align-items:center;
+}
+</style>
+</head>
+<body>
+
+	<div class="container">
+		<h2>Admin Settings</h2>
+
+		<!-- Display success message if present -->
+		<div th:if="${successMessage}" class="alert">
+			<p th:text="${successMessage}"></p>
+		</div>
+
+		<form action="/admin/settings" method="post">
+			<div class="setting-section">
+				<h3>Queue Booking</h3>
+				<div class="toggle-switch">
+					<input type="checkbox" id="toggleBooking" name="toggleBooking"
+						th:checked="${isBookingEnabled}" onchange="toggleText()" /> <label
+						for="toggleBooking" class="toggle-slider"></label> <span
+						id="switchLabel" th:text="${isBookingEnabled ? 'ON' : 'OFF'}"></span>
+				</div>
+			</div>
+
+			<div class="btn-container">
+				<button type="submit" class="btn btn-save">Save Settings</button>
+				<a href="/admin/home" class="btn btn-back">Back to Home</a>
+			</div>
+		</form>
+	</div>
+
+	<!-- JavaScript to toggle the label text -->
+	<script>
+		function toggleText() {
+			var checkbox = document.getElementById("toggleBooking");
+			var label = document.getElementById("switchLabel");
+
+			if (checkbox.checked) {
+				label.textContent = "ON";
+			} else {
+				label.textContent = "OFF";
+			}
+		}
+
+		// Call the function on page load to ensure the label matches the initial state
+		window.onload = function() {
+			toggleText();
+		};
+	</script>
+
+</body>
+</html>

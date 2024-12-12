@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        /* Global Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        html{
+        	background-image: url('https://wallpapercave.com/wp/wp1946307.jpg'); /* Background Image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Navbar Styles */
+        nav {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            border-radius:10px;
+            backdrop-filter: blur(30px);
+            box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+            border:2px solid rgba(255, 255, 255, 0.18);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+            padding:20px 0 20px 0;
+        }
+        nav ul li:last-child {
+    		margin-right: 20px;
+		}
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e8491d;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 350px;
+            text-align: center;
+            position: relative;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: url('https://cdn-icons-png.flaticon.com/512/149/149071.png') no-repeat center;
+            background-size: 60px;
+            width: 60px;
+            height: 60px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #e8491d;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 14px;
+            outline: none;
+            text-indent: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #333;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e8491d;
+        }
+
+        p {
+            font-size: 14px;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        p a {
+            color: #e8491d;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+
+    <div class="form-container">
+        <h1>Welcome Back!</h1>
+        <form action="/login" method="post">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Sign In</button>
+        </form>
+        <p>Don't have an account? <a href="/register">Sign up now!</a></p>
+    </div>
+</body>
+</html>

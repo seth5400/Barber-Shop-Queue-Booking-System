@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barber Schedule</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
+    <style>
+
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            min-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-image: url('https://wallpapercave.com/wp/wp1946307.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100%;
+        }
+
+        /* Main Container */
+        .calendar-container {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 10px;
+            margin-top: 60px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Booking List */
+        .booking-list {
+        	margin:20px auto 20px auto;
+            max-width: 1040px;
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-list h3 {
+            font-size: 22px;
+            color: #e8491d;
+            margin-bottom: 15px;
+        }
+
+        .booking-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .booking-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .booking-list li:last-child {
+            border-bottom: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="calendar-container">
+        <h1>Barber Schedule</h1>
+        <div id="calendar"></div>
+    </div>
+
+    <div class="booking-list">
+        <h3>Booking List for <span id="selected-date">Select a date</span></h3>
+        <ul id="booking-list">
+            <!-- Booking data will appear here -->
+        </ul>
+    </div>
+    
+
+    <script>
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                // FullCalendar settings
+                dayClick: function(date) {
+                    // Show selected date
+                    $('#selected-date').text(date.format());
+
+                    // Fetch bookings for the selected date
+                    $.ajax({
+                        url: '/api/appointments-by-date',
+                        data: { date: date.format() },
+                        success: function(appointments) {
+                            $('#booking-list').empty(); // Clear old bookings
+                            if (appointments.length > 0) {
+                                appointments.forEach(function(appointment) {
+                                    $('#booking-list').append('<li>' + 
+                                        'Customer: ' + appointment.customerName + ', ' +
+                                        'Time: ' + appointment.time + ', ' +
+                                        'Service: ' + appointment.serviceName + ', ' +
+                                        'Status: ' + appointment.status + ', ' +
+                                        'Barber: ' + appointment.barberName +
+                                        '</li>');
+                                });
+                            } else {
+                                $('#booking-list').append('<li>No bookings for this date.</li>');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log('Error: ' + xhr.responseText); // Log error to console
+                            $('#booking-list').empty().append('<li>Error fetching bookings.</li>');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

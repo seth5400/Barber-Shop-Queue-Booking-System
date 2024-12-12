@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Services</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+        body {
+            background-image: url('https://wallpapercave.com/wp/wp1946307.jpg'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            min-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+
+        }
+
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 10px;
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2, h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            margin-right: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff4500;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e63900;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #333;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Button Styles for Update/Delete */
+        .btn {
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            margin-right: 5px;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        /* Back Button Styles */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            padding: 10px 20px;
+            background-color: #ff4500;
+            color: #fff;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #e63900;
+        }
+    </style>
+</head>
+<body>
+<!--  
+    <nav>
+        <ul>
+            <li><a href="/admin/home" class="back-btn">Back</a></li>
+        </ul>
+    </nav>-->
+
+    <div class="container">
+        <h2>Manage Services</h2>
+
+        <!-- Form for Adding New Service -->
+        <h3>Add New Service</h3>
+        <form action="/admin/services/add" method="post">
+            <label for="serviceName">Service Name:</label>
+            <input type="text" id="serviceName" name="serviceName" required>
+
+            <label for="servicePrice">Service Price:</label>
+            <input type="number" id="servicePrice" name="servicePrice" step="0.01" required>
+
+            <button type="submit">Add Service</button>
+        </form>
+
+        <!-- Display Existing Services for Editing -->
+        <h3>Current Services</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Service Name</th>
+                    <th>Service Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="service : ${services}">
+                    <form action="/admin/services/edit" method="post">
+                        <td>
+                            <input type="text" th:value="${service.serviceName}" name="serviceName" required>
+                        </td>
+                        <td>
+                            <input type="number" th:value="${service.servicePrice}" step="0.01" name="servicePrice" required>
+                        </td>
+                        <td>
+                            <input type="hidden" th:value="${service.serviceId}" name="serviceId">
+                            <button type="submit" class="btn">Update</button>
+                    </form>
+                    <form action="/admin/services/delete" method="post" style="display:inline;">
+                        <input type="hidden" th:value="${service.serviceId}" name="serviceId">
+                        <button type="submit" class="btn btn-delete">Delete</button>
+                    </form>
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แก้ไขโปรไฟล์</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+
+        body {
+			background-image: url('https://wallpapercave.com/wp/wp1946307.jpg'); /* Background to match user_home */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            min-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            color: #e8491d; /* Color to match user_home */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Button Styles */
+        .submit-button {
+            display: block;
+            width: 250px; /* Same width as buttons in user_home */
+            margin:0 auto -10px auto;
+            padding: 15px 0px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #333; /* Matching button color from user_home */
+            border-radius: 5px;
+            text-transform: uppercase;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .submit-button-1{
+        	margin-bottom:25px;
+        }
+        
+
+        .submit-button:hover {
+            background-color: #e8491d; /* Hover effect to match user_home */
+        }
+
+
+
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+    </style>
+    <script>
+        function validateForm() {
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+
+            if (name === "" || email === "" || password === "" || confirmPassword === "") {
+                alert("กรุณากรอกข้อมูลให้ครบทุกช่อง");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Edit Profile</h1>
+        <form action="/user/update" method="POST" onsubmit="return validateForm()">
+            <input type="hidden" name="id" th:value="${user.id}" />
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" th:value="${user.name}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" th:value="${user.email}" required>
+            </div>
+            <div class="form-group">
+                <label for="password">New password:</label>
+                <input type="password" id="password" name="password" placeholder="New password">
+                <div class="error-message" id="passwordError"></div>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm new password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
+            </div>
+            <button type="submit" class="submit-button submit-button-1">Save Changes</button>
+        </form>
+        
+		<a class="submit-button" href="/user/profile">Back to Profile</a>	
+        
+    </div>
+
+</body>
+</html>

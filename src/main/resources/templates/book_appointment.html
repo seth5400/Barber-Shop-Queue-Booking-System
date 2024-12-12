@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>จองนัดหมาย</title>
+<style>
+/* Google Fonts */
+@import
+	url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap')
+	;
+
+
+
+body {
+	background-image: url('https://wallpapercave.com/wp/wp1946307.jpg');
+	/* ใช้ภาพพื้นหลังเดียวกับ user_home */
+	background-size: cover; /* ทำให้ภาพขยายเต็มหน้าจอ */
+	background-position: center; /* จัดตำแหน่งภาพให้อยู่ตรงกลาง */
+	background-repeat: no-repeat; /* ป้องกันไม่ให้ภาพซ้ำ */
+	height: 100vh; /* ทำให้เต็มหน้าจอ */
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+	color: #333;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100%;
+
+}
+
+/* Container */
+.container {
+	width: 100%;
+	max-width: 800px; /* ปรับขนาดให้เล็กลงเพื่อความพอดี */
+	background-color: #fff;
+	border-radius: 15px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 40px;
+}
+
+/* Form Styles */
+.form-container {
+	width: 100%;
+}
+
+h1 {
+	font-size: 28px;
+	font-weight: 700;
+	text-align: center;
+	color: #e8491d; /* ใช้สีเดียวกับหน้า user_home */
+	margin-bottom: 20px;
+	text-transform: uppercase;
+}
+
+label {
+	font-weight: 500;
+	display: block;
+	margin-bottom: 8px;
+}
+
+input[type="date"] {
+	width: calc(100% - 40px); /* ลดขนาดลงจาก 100% เล็กน้อยเพื่อลดการเกิน */
+	padding: 15px 20px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	font-size: 16px;
+}
+input[type="time"] {
+	width: calc(100% - 40px); /* ลดขนาดลงจาก 100% เล็กน้อยเพื่อลดการเกิน */
+	padding: 15px 20px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	font-size: 16px;
+}
+
+
+select {
+	width: calc(100%); /* ลดขนาดลงจาก 100% เล็กน้อยเพื่อลดการเกิน */
+	padding: 15px 20px;
+
+	margin-bottom: 20px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	font-size: 16px;
+}
+.lb{
+	margin-top:20px;
+}
+
+button {
+	display: inline-block;
+	width: 100%;
+	padding: 15px 20px; /* ขนาดปุ่มเท่ากับ user_home */
+	background-color: #333;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 16px;
+	border: none;
+	border-radius: 5px;
+	transition: background-color 0.3s;
+}
+
+button:hover {
+	background-color: #e8491d; /* เปลี่ยนเป็นสีส้มเมื่อ hover */
+}
+
+.error-message {
+	color: red;
+	font-size: 14px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+</style>
+<script>
+        // ตั้งค่าวันที่ขั้นต่ำเป็นวันนี้
+        function setMinDate() {
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById("date").setAttribute('min', today);
+        }
+
+        // ตรวจสอบฟอร์มเมื่อกด submit
+        function validateForm() {
+            var dateInput = document.getElementById("date");
+            var timeInput = document.getElementById("time");
+            var errorMessage = document.getElementById("errorMessage");
+
+            var selectedDate = new Date(dateInput.value);
+            var today = new Date();
+            today.setHours(0, 0, 0, 0); // ตั้งค่าเวลาเป็นเที่ยงคืนของวันนี้
+
+            // ตรวจสอบวันที่ว่าไม่ใช่วันในอดีต
+            if (selectedDate < today) {
+                errorMessage.textContent = "ไม่สามารถจองวันในอดีตได้";
+                return false;
+            }
+
+            // ตรวจสอบเวลาที่เลือกเฉพาะวันนี้ว่าห้ามเป็นเวลาในอดีต
+            if (selectedDate.getTime() === today.getTime()) {
+                var currentTime = new Date().toTimeString().slice(0, 5);
+                if (timeInput.value < currentTime) {
+                    errorMessage.textContent = "ไม่สามารถจองเวลาที่ย้อนหลังในวันนี้ได้";
+                    return false;
+                }
+            }
+
+            // ตั้งช่วงเวลา 9:00 น. ถึง 16:00 น.
+            var minTime = "09:00";
+            var maxTime = "16:00";
+            var time = timeInput.value;
+
+            // ตรวจสอบเวลาที่เลือกว่าต้องอยู่ในช่วง 9:00 น. ถึง 16:00 น.
+            if (time < minTime || time > maxTime) {
+                errorMessage.textContent = "สามารถจองได้เฉพาะช่วงเวลา 9:00 น. - 16:00 น.";
+                return false;
+            }
+
+            // ถ้าไม่มีปัญหาในการตรวจสอบ
+            errorMessage.textContent = "";
+            return true;
+        }
+    </script>
+</head>
+
+<body onload="setMinDate()">
+	<div class="container">
+		<h1>Book Appointment</h1>
+		<div class="form-container">
+			<form action="/appointment/book" method="post"
+				onsubmit="return validateForm()">
+				<label for="date">Date:</label> 
+				<input type="date" id="date"
+					name="date" required /> 
+				<label for="time">Time:</label> 
+				<input
+					type="time" id="time" name="time" required /> 
+				<small>Appointments available between 9:00 AM - 4:00 PM only.</small> 
+				<label class="lb" for="barber">Select Barber:</label> 
+				<select id="barber" name="barberId" required>
+					<option value="">Select Barber</option>
+					<option th:each="barber : ${barbers}" th:value="${barber.id}"
+						th:text="${barber.name}"></option>
+				</select> <label for="service">Select Service:</label> <select id="service"
+					name="serviceId" required>
+					<option value="">Select Service</option>
+					<option th:each="service : ${services}"
+						th:value="${service.serviceId}"
+						th:text="${service.serviceName} + ' - ' + ${service.servicePrice} + ' baht'"></option>
+				</select>
+
+				<div class="error-message" id="errorMessage"></div>
+				<button type="submit">Book</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

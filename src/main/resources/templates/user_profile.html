@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+        body {
+            background-image: url('https://wallpapercave.com/wp/wp1946307.jpg'); /* Same background as user_home */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            min-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* Profile Styles */
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #e8491d; /* Match the color scheme from user_home */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .user-info {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .user-info label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .user-info span {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: block;
+            width: 250px; /* Same width as buttons in user_home */
+            margin: 10px auto 20px auto; /* Center the buttons */
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #333; /* Match the default button style */
+            border-radius: 5px;
+            text-transform: uppercase;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+		.btn-1{
+			margin-bottom:-15px;
+		}
+		
+        .btn:hover {
+            background-color: #e8491d; /* Hover effect to match user_home */
+        }
+
+        .back-btn {
+            background-color: #6c757d; /* Slightly different color for the Back button */
+        }
+
+        
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>User Profile</h1>
+        <div class="user-info">
+            <label>Name:</label>
+            <span th:text="${user.name}">John Doe</span>
+
+            <label>Email:</label>
+            <span th:text="${user.email}">john.doe@example.com</span>
+        </div>
+        <a href="/user/edit" class="btn">Edit Profile</a>
+        <a href="/home" class="btn back-btn btn-1">Back to Home</a>
+    </div>
+
+</body>
+</html>

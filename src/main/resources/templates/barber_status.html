@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barber Availability Status</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+        body {
+            background-image: url('https://wallpapercave.com/wp/wp1946307.jpg'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            min-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+        /* Main Content */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 10px;
+            margin-top: 60px;
+            margin-bottom: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Navbar Styles */
+        nav {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li a {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #e8491d;
+        }
+
+        /* Table Styles */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #333;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .available {
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .not-available {
+            background-color: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<!-- 
+    <nav>
+        <ul>
+            <li><a href="/admin/home">Back</a></li> 
+        </ul>
+    </nav> -->
+
+    <div class="container">
+        <h2>Barber Availability Status</h2> <!-- Added heading to match layout style -->
+
+        <!-- Barber Availability Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Barber Name</th>
+                        <th>Email</th>
+                        <th>Availability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through barbers -->
+                    <tr th:each="barber : ${barbers}">
+                        <td th:text="${barber.name}"></td>
+                        <td th:text="${barber.email}"></td>
+                        <td th:text="${barber.isAvailable == true ? 'Available' : 'Not Available'}" 
+                            th:class="${barber.isAvailable == true ? 'available' : 'not-available'}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

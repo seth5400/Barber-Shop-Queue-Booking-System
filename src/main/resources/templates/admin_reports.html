@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Reports Dashboard</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+        body {
+        	background-image: url('https://wallpapercave.com/wp/wp1946307.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            min-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* Navbar Styles */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            
+            z-index: 100;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 40px;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ffccbc;
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            width: 85vw;
+            max-width: 1000px;
+            padding: 40px;
+            margin-top: 100px; /* Offset for navbar */
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Title Styles */
+        .dashboard-title {
+            font-size: 28px;
+            color: #333;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* Report Cards */
+        .card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .card ol{
+        	text-align: left;
+        }
+       
+        
+        
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-size: 22px;
+            color: #e8491d;
+            margin-bottom: 10px;
+        }
+
+        .card-content {
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Table Styles */
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+
+        .report-table th, .report-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .report-table th {
+            background-color: #333;
+            color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .report-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .report-table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            padding: 10px 20px;
+            background-color: #ff4500;
+            color: #fff;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #e63900;
+        }
+
+    </style>
+</head>
+<body>
+<!-- 
+    <nav>
+        <ul>
+            <li><a href="/admin/home" class="back-btn">Back</a></li>
+        </ul>
+    </nav> -->
+
+    <div class="dashboard-container">
+        <h1 class="dashboard-title">Admin Reports Dashboard</h1>
+
+        <!-- Cards Grid -->
+        <div class="cards-grid">
+            <!-- Earnings Card -->
+            <div class="card">
+                <div class="card-title">Total Earnings</div>
+                <div class="card-content" th:text="'$' + ${totalEarnings}">$0.0</div>
+            </div>
+            
+            <!-- Top Services Card -->
+            <div class="card">
+                <div class="card-title">Top Services</div>
+                <div class="card-content">
+                    <ol>
+                        <li th:each="entry : ${topServices}">
+                            <span th:text="${entry.key.serviceName}"></span> - 
+                            <span th:text="${entry.value}"></span> bookings
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Top Barbers Card -->
+            <div class="card">
+                <div class="card-title">Top Barbers</div>
+                <div class="card-content">
+                    <ol>
+                        <li th:each="entry : ${topBarbers}">
+                            <span th:text="${entry.key.name}"></span> - 
+                            <span th:text="${entry.value}"></span> bookings
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Top Users Card -->
+            <div class="card">
+                <div class="card-title">Top Users</div>
+                <div class="card-content">
+                    <ol>
+                        <li th:each="entry : ${topUsers}">
+                            <span th:text="${entry.key.name}"></span> - 
+                            <span th:text="${entry.value}"></span> bookings
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments Overview Table -->
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>User</th>
+                    <th>Barber</th>
+                    <th>Service</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="appointment : ${allAppointments}">
+                    <td th:text="${appointment.date}"></td>
+                    <td th:text="${appointment.user.name}"></td>
+                    <td th:text="${appointment.barber.name}"></td>
+                    <td th:text="${appointment.barberService.serviceName}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
