@@ -38,6 +38,8 @@ A web-based system for managing barber shop appointments and queues efficiently.
    - Open your browser and navigate to http://localhost:8080
   
 ## Project Structure
-
-
-
+- **Controllers**: Handle HTTP requests and route them to services.
+- **Services**: Business logic and data manipulation.
+- **Models**: Represent database entities.
+- **Repositories**: Interface for data access.
+- **Resources**: Static files and templates for frontend.
