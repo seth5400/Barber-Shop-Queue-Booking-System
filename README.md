@@ -2,6 +2,9 @@
 
 A web-based system for managing barber shop appointments and queues efficiently. Built with **Spring Boot** for backend and **Thymeleaf** templates for frontend.
 
+## About This Project
+This project is a collaborative work between me and my friend. It was developed as part of our shared learning experience to create a functional Barber Shop Queue Booking System.
+
 ## Features
 - User registration and login system
 - Appointment booking with barber selection
